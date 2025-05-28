@@ -8,3 +8,11 @@ export const getUsers = () => {
 export const createUser = (userData: any) => {
   return api.post('/users', userData);
 };
+
+export const logInUser = (logInDetails: any) => {
+  return api.post('/users/logIn', logInDetails);
+};
+
+export const registerLandLord = (landLordData: any) => {
+  return api.post('/landlords', landLordData);
+};

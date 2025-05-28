@@ -1,35 +1,37 @@
 import {  Alert, Button, Grid, IconButton, Input, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import type { User } from "~/models/user";
-import { createUser } from "~/services/userServices";
+import type { LandLord, User } from "~/models/user";
+import { createUser, registerLandLord } from "~/services/userServices";
 
 
-export default function Register()
+export default function RegisterLandLord()
 {
     
     const navigate = useNavigate();
 
     const [firstName, setFirstName] = useState('');
     const [laststName, setLastName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassWord] = useState('');
 
     const handleClick = async () => {
         
-        const usr : User = {
+        const landLord : LandLord = {
             firstName:firstName,
             lastName:laststName,
+            phoneNumber:phoneNumber,
             email:email,
             passWord:password
         };
 
         try {
-                const response = await createUser(usr);
+                const response = await registerLandLord(landLord);
                 if(response.status===201)
                     navigate("/");
         } catch (error) {
-            console.error('Failed to load users:', error); }
+            console.error('Failed to Register:', error); }
         };
 
     return (
@@ -44,7 +46,7 @@ export default function Register()
                 }}
             >
                 <Grid size={3}>
-                    <h1>Register User</h1>
+                    <h1>LandLord Registration</h1>
                 </Grid>
                 <Grid size={3}>
                     <Input 
@@ -57,6 +59,13 @@ export default function Register()
                     <Input 
                         onChange = {(event) => setLastName(event.target.value)}
                         placeholder="Last Name" 
+                        fullWidth
+                    />
+                </Grid>
+                <Grid size={3}>
+                    <Input 
+                        onChange = {(event) => setPhoneNumber(event.target.value)}
+                        placeholder="Phone Number" 
                         fullWidth
                     />
                 </Grid>
