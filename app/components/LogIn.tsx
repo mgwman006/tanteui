@@ -59,6 +59,8 @@ function CustomButton() {
       disableElevation
       fullWidth
       sx={{ my: 2 }}
+      onClick={() => alert("yooo")}
+      onClickCapture={() => alert("yee")}
     >
       Log In
     </Button>
