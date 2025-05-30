@@ -23,3 +23,11 @@ export interface LandLord
     email : string;
     passWord: string;
 }
+
+export interface Tenant
+{
+    firstName : string;
+    lastName : string;
+    phoneNumber : string;
+    email : string;
+}

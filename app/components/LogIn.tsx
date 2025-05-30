@@ -1,27 +1,14 @@
-import * as React from 'react';
 import {
   Button,
-  FormControl,
-  Checkbox,
-  FormControlLabel,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-  InputAdornment,
-  Alert,
-  IconButton,
-  Box,
   Input,
   Grid,
 } from '@mui/material';
 
-import { AppProvider } from '@toolpad/core/AppProvider';
-import { SignInPage } from '@toolpad/core/SignInPage';
-import { useTheme } from '@mui/material/styles';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { UserStatus, type LogInDetails } from '~/models/user';
 import { logInUser } from '~/services/userServices';
+import { saveToLocalStorage } from '~/utilities/localStorage';
 
 
 
@@ -44,11 +31,11 @@ export default function LogIn() {
       const response = await logInUser(logInDetails);
       if(response.status===200 && response.data.userStatus == UserStatus.LogInSuccess)
       {
-          console.log(response);
-          navigate("homepage");
+          const id:number = response.data.userDetails.id;
+          saveToLocalStorage("isUserLoggedIn","true");
+          navigate(`landlord/${id}`);
       }
           
-
       else 
         console.log(response);
     } catch (error)
