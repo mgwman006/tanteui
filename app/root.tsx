@@ -5,13 +5,11 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useNavigate,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
-import { getFromLocalStorage, saveToLocalStorage } from "./utilities/localStorage";
+import { Header } from "./components/Header";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -28,44 +26,14 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
 
-  const navigate = useNavigate();
-
-  const showLogOutButton : boolean = getFromLocalStorage('isUserLoggedIn') === "true"? false:true;
-
-  const handleLogOut = () => {
-        saveToLocalStorage("isUserLoggedIn","false");
-        navigate("/");
-  }
-
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
       </head>
       <body>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-              >
-                Logo
-              </IconButton>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                
-              </Typography>
-              <Button hidden={showLogOutButton} color="inherit" onClick={handleLogOut}>Log Out</Button>
-
-            </Toolbar>
-          </AppBar>
-        </Box>
+        <Header></Header>
         {children}
         <ScrollRestoration />
         <Scripts />

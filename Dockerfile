@@ -1,19 +1,22 @@
-FROM node:20-alpine AS development-dependencies-env
-COPY . /app
-WORKDIR /app
-RUN npm ci
-
-
-
-FROM node:20-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-WORKDIR /app
-RUN npm run build
-
 FROM node:20-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
+
+# Set working directory
 WORKDIR /app
+
+# Copy only package files first for better caching
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the app
+COPY . .
+
+# Expose Vite's default port
+EXPOSE 5173
+
+# Ensure Vite listens on all interfaces
+ENV HOST=0.0.0.0
+
+# Start the dev server
 CMD ["npm", "run", "dev"]
