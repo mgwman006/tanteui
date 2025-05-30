@@ -16,3 +16,11 @@ export const logInUser = (logInDetails: any) => {
 export const registerLandLord = (landLordData: any) => {
   return api.post('/landlords', landLordData);
 };
+
+export const registerTenant = (landLordId:number,tenantData: any) => {
+  return api.post(`/landlords/${landLordId}/tenant`, tenantData);
+};
+
+export const getTenants = (landLordId:number) => {
+  return api.get(`/landlords/${landLordId}/tenant`);
+};
