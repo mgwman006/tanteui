@@ -54,8 +54,9 @@ export default function LogIn() {
               justifyContent: "center",
               alignItems: "center",
           }}
+          size={{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}} 
        >
-          <Grid size={3}>
+          <Grid size={{xs: 6, sm: 6, md: 3, lg: 3, xl: 3}}>
               <Input 
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="Email" 
@@ -63,7 +64,7 @@ export default function LogIn() {
               />
           </Grid>
 
-          <Grid size={3}>
+          <Grid size={{xs: 6, sm: 6, md: 3, lg: 3, xl: 3}}>
               <Input 
                   onChange={(event) => setPassWord(event.target.value)}
                   placeholder="Password" 
@@ -71,23 +72,21 @@ export default function LogIn() {
               />
           </Grid>
           <Grid 
-            size ={3}
+            size={{xs: 6, sm: 6, md: 3, lg: 3, xl: 3}}
             container 
             spacing={2}
             direction="row"
-            sx={{
-                justifyContent: "center",
-                alignItems: "center",
-            }}
+            display={"flex"}
+            justifyContent={"space-around"}
           >
-              <Grid size={3}>
+              <Grid size={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1}} alignContent={"start"}>
                 <Button 
                     onClick={handleLogIn}
                 >
                     LogIn
                 </Button>
               </Grid>
-              <Grid size={3}>
+              <Grid size={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1}} alignContent={"start"}>
                 <Button 
                     onClick={() => navigate("registerlandlord")}
                 >
