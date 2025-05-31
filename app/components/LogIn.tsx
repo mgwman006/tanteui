@@ -1,6 +1,5 @@
 
 import { useNavigate } from 'react-router';
-import { useState } from 'react';
 import { UserStatus, type LogInDetails } from '~/models/user';
 import { logInUser } from '~/services/userServices';
 import { saveToLocalStorage } from '~/utilities/localStorage';
