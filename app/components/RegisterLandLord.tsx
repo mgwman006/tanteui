@@ -55,10 +55,10 @@ export default function RegisterLandLord()
            >
                 
                 <Form.Item
-                  name="firstName"
-                  rules={[{ required: true, message: 'Please input your first name!' }]}
+                    name="firstName"
+                    rules={[{ required: true, message: 'Please input your first name!' }]}
                 >
-                  <Input placeholder="First Name" type="text" />
+                    <Input placeholder="First Name" type="text" />
                 </Form.Item>
 
                 <Form.Item

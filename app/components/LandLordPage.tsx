@@ -94,7 +94,7 @@ export default function LandLordPage() {
                 console.log(response.data);
                 setConfirmLoading(false);
                 setOpenForm(false);
-                window.location.reload(); // Reload the page to fetch updated tenant list
+                // window.location.reload(); // Reload the page to fetch updated tenant list
             } else {
                 alert("Failed to register tenant. Please try again.");
             }
