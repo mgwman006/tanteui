@@ -1,30 +1,28 @@
-import {
-  Button,
-  Input,
-  Grid,
-} from '@mui/material';
 
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { UserStatus, type LogInDetails } from '~/models/user';
 import { logInUser } from '~/services/userServices';
 import { saveToLocalStorage } from '~/utilities/localStorage';
+import { Button, Checkbox, Flex, Form, Input, Space, type FormInstance } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 
-
+interface FormValues {
+  email: string;
+  passWord: string;
+}
 export default function LogIn() {
 
   const navigate = useNavigate();
-  const [email,setEmail] = useState('');
-  const [passWord,setPassWord] = useState('');
 
-  
+  const [form]: [FormInstance<FormValues>] = Form.useForm<FormValues>();
 
-   const handleLogIn = async () => {
+   const handleLogIn = async (vallues:FormValues) => {
     
     const logInDetails: LogInDetails = {
-      email: email,
-      passWord: passWord
+      email: vallues.email,
+      passWord: vallues.passWord
     }
 
     try {
@@ -33,7 +31,7 @@ export default function LogIn() {
       {
           const id:number = response.data.userDetails.id;
           saveToLocalStorage("isUserLoggedIn","true");
-          navigate(`landlord/${id}`);
+          navigate(`/landlord/${id}`);
       }
           
       else 
@@ -45,56 +43,47 @@ export default function LogIn() {
 
   }
   
-  return (
-       <Grid
-          container 
-          spacing={2}
-          direction="column"
-          sx={{
-              justifyContent: "center",
-              alignItems: "center",
-          }}
-          size={{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}} 
-       >
-          <Grid size={{xs: 6, sm: 6, md: 3, lg: 3, xl: 3}}>
-              <Input 
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="Email" 
-                fullWidth
-              />
-          </Grid>
+      return (
+        <Space align='center' direction='vertical' style={{ width: '100%',height: '100%', paddingTop: '15%' }}>
+              <h1>Tante App</h1>
+              <p>Please log in to your account as a property owner.</p>
+              <Form<FormValues>
+              layout="vertical"
+              form={form}
+              name="login"
+              initialValues={{ remember: true }}
+              style={{ maxWidth: 360 }}
+              onFinish={handleLogIn}
+            >
+              <Form.Item
+                name="email"
+                rules={[{ required: true, message: 'Please input your email!' }]}
+              >
+                <Input prefix={<UserOutlined />} placeholder="email" type='email'/>
+              </Form.Item>
+              <Form.Item
+                name="passWord"
+                rules={[{ required: true, message: 'Please input your Password!' }]}
+              >
+                <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
+              </Form.Item>
+              <Form.Item>
+                <Flex justify="space-between" align="center">
+                  <Form.Item name="remember" valuePropName="checked" noStyle>
+                    <Checkbox>Remember me</Checkbox>
+                  </Form.Item>
+                  <a href="">Forgot password</a>
+                </Flex>
+              </Form.Item>
 
-          <Grid size={{xs: 6, sm: 6, md: 3, lg: 3, xl: 3}}>
-              <Input 
-                  onChange={(event) => setPassWord(event.target.value)}
-                  placeholder="Password" 
-                  fullWidth
-              />
-          </Grid>
-          <Grid 
-            size={{xs: 6, sm: 6, md: 3, lg: 3, xl: 3}}
-            container 
-            spacing={2}
-            direction="row"
-            display={"flex"}
-            justifyContent={"space-around"}
-          >
-              <Grid size={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1}} alignContent={"start"}>
-                <Button 
-                    onClick={handleLogIn}
-                >
-                    LogIn
+              <Form.Item>
+                <Button block type="primary" htmlType="submit">
+                  Log in
                 </Button>
-              </Grid>
-              <Grid size={{xs: 3, sm: 3, md: 1, lg: 1, xl: 1}} alignContent={"start"}>
-                <Button 
-                    onClick={() => navigate("registerlandlord")}
-                >
-                    Register
-                </Button>
-              </Grid>
-          </Grid>
-                
-       </Grid>
+                or <a href="/registerlandlord">Register now!</a>
+              </Form.Item>
+            </Form>
+        </Space>
+            
   );
 }

@@ -1,97 +1,96 @@
-import {  Alert, Button, Grid, IconButton, Input, TextField } from "@mui/material";
-import { useState } from "react";
+import { Button, Form, Input, Space } from "antd";
 import { useNavigate } from "react-router";
-import type { LandLord, User } from "~/models/user";
-import { createUser, registerLandLord } from "~/services/userServices";
+import type { LandLord } from "~/models/user";
+import { registerLandLord } from "~/services/userServices";
+
 
 
 export default function RegisterLandLord()
 {
     
     const navigate = useNavigate();
+    const [form] = Form.useForm<LandLord>();
 
-    const [firstName, setFirstName] = useState('');
-    const [laststName, setLastName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassWord] = useState('');
-
-    const handleClick = async () => {
+    const handleClick = async (values : LandLord) => {
         
         const landLord : LandLord = {
-            firstName:firstName,
-            lastName:laststName,
-            phoneNumber:phoneNumber,
-            email:email,
-            passWord:password
+            firstName:values.firstName,
+            lastName:values.lastName,   
+            phoneNumber:values.phoneNumber,
+            email:values.email,
+            passWord: values.passWord,
         };
 
         try {
+            console.log('Registering LandLord:', landLord);
                 const response = await registerLandLord(landLord);
+                console.log('Response:', response);
                 if(response.status===201)
-                    navigate("/");
+                {
+                    const id: number = Number(response.data.id);
+                    navigate(`/landlord/${id}`);
+                }
+                else {
+                    alert(`Registration failed: ${response}`);
+                    console.log('Registration failed:', response.data.message);
+                }
         } catch (error) {
-            console.error('Failed to Register:', error); }
+            console.log('Failed to Register:', error); 
+            alert(`Registration failed: ${error}`);
+            
         };
+    }
 
     return (
-            <Grid 
-                container 
-                spacing={2}
-                direction="column"
-                sx={{
-                    justifyContent: "center",
-                    alignItems: "center",
+        <Space align='center' direction='vertical' style={{ width: '100%',height: '100%', paddingTop: '15%' }}>
 
-                }}
-            >
-                <Grid size={3}>
-                    <h1>LandLord Registration</h1>
-                </Grid>
-                <Grid size={3}>
-                    <Input 
-                        onChange={(event)=> setFirstName(event.target.value)}
-                        placeholder="Firs tName" 
-                        fullWidth
-                    />
-                </Grid>
-                <Grid size={3}>
-                    <Input 
-                        onChange = {(event) => setLastName(event.target.value)}
-                        placeholder="Last Name" 
-                        fullWidth
-                    />
-                </Grid>
-                <Grid size={3}>
-                    <Input 
-                        onChange = {(event) => setPhoneNumber(event.target.value)}
-                        placeholder="Phone Number" 
-                        fullWidth
-                    />
-                </Grid>
-                <Grid size={3}>
-                    <Input 
-                        onChange={(event) => setEmail(event.target.value)}
-                        placeholder="Email" 
-                        fullWidth
-                    />
-                </Grid>
-                <Grid size={3}>
-                    <Input 
-                        onChange={(event) => setPassWord(event.target.value)}
-                        placeholder="Password" 
-                        fullWidth
-                    />
-                </Grid>
-                <Grid size={3}>
-                    <Button 
-                        onClick={handleClick}
-                    >
-                        Submit
-                    </Button>
+            <h3>Tante App</h3>
+            <p>Please Register as a property owner.</p>
+            <Form<LandLord>
+                form={form}
+                name="registerLandLord"
+                initialValues={{ remember: true }}
+                style={{ maxWidth: 360}}
+                onFinish={handleClick}
+           >
                 
-                </Grid>
+                <Form.Item
+                  name="firstName"
+                  rules={[{ required: true, message: 'Please input your first name!' }]}
+                >
+                  <Input placeholder="First Name" type="text" />
+                </Form.Item>
+
+                <Form.Item
+                    name="lastName"
+                    rules={[{ required: true, message: 'Please input your last name!' }]}
+                >
+                    <Input placeholder="Last Name" type='text'/>
+                </Form.Item>
+                <Form.Item
+                    name="phoneNumber"
+                    rules={[{ required: true, message: 'Please input your phone number!' }]}
+                >   
+                    <Input placeholder="Phone Number" type='tel'/>
+                </Form.Item>
+                <Form.Item
+                    name="email"
+                    rules={[{ required: true, message: 'Please input your email!' }]}
+                >
+                    <Input placeholder="Email" type='email'/>
+                </Form.Item>
+                <Form.Item
+                    name="passWord"
+                    rules={[{ required: true, message: 'Please input your Password!' }]}
+                >
+                    <Input.Password placeholder="Password" type='password'/>
+                </Form.Item>
+
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" style={{ width: '100%' }}>Register</Button>
+                </Form.Item>
             
-            </Grid>
+            </Form>
+        </Space>
     );
 }

@@ -1,29 +1,18 @@
 import type { Route } from "./+types/home";
-import { Col, Progress, Row } from 'antd';
+import { Button, Col, Flex, Progress, Row } from 'antd';
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "Tante App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
+
 
 export default function Home() {
   return (
-      <>
-        <Row>
-          <Col span={24} style={{ textAlign: 'center'}}>
-            <h2>Welcome to Tante App</h2>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={24} style={{ textAlign: 'center'}}>
-            <h1>Your one-stop solution for property management.</h1>
-          </Col>
-        </Row>
+      <Flex 
+        gap={'0'}
+        vertical 
+        align="center" 
+        justify="center" >
         <Row justify="center">
-          <Col span={12} style={{ textAlign: 'center' }}>
-                 <Progress
+          <Col span={24} style={{ textAlign: 'center' }}>
+                  <Progress
                     type="dashboard"
                     steps={10}
                     percent={10}
@@ -32,6 +21,22 @@ export default function Home() {
                   />
           </Col>
         </Row>
-      </>)
-        ;
+        <Row>
+        
+          <Col span={24} style={{ textAlign: 'center'}}>
+            <h1>Tante App</h1>
+            <h3>Your one-stop solution for property management.</h3>
+            <p><i>Manage your properties with ease</i></p>
+          </Col>
+        </Row>
+       
+        
+
+        <Row justify="center" align="middle">
+          <Col span={24} style={{ textAlign: 'center' }}>
+              <Button color="green" size="large" href="/login" variant="solid">Give it a Try</Button>
+          </Col>
+        </Row>
+
+      </Flex>);
 }
