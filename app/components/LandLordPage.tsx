@@ -1,24 +1,43 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import Fab from '@mui/material/Fab';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import Avatar from '@mui/material/Avatar';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete'
-import { Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, ListItem, Stack, Switch, TextField, Tooltip } from '@mui/material';
 import { useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import type { Tenant } from '~/models/user';
 import { getTenants, registerTenant } from '~/services/userServices';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import { Avatar, Button, Col, Flex, FloatButton, Input, List, Modal, Result, Row, Space, Tag, Tooltip, Typography } from 'antd';
+import {
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+  ExclamationCircleOutlined,
+  MinusCircleOutlined,
+  SyncOutlined,
+  MoreOutlined, 
+  PlusCircleOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
 
 
+
+interface TenantResponseDto {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+};
+
+interface LandLordResponseDto {
+  id: number;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+};
+
+interface LandLordWithTenantsResponseDto {
+  landLordDetails: LandLordResponseDto;
+  tenants: TenantResponseDto[];
+};
 
    
 
@@ -27,18 +46,21 @@ export default function LandLordPage() {
     const params = useParams();
     const navigate = useNavigate();
     const [openForm, setOpenForm] = useState(false);
+    const [confirmLoading, setConfirmLoading] = useState(false);
+
     const [tenantFirstName, setTenantFirstName] = useState('');
     const [tenantLatName, setTenantLastName] = useState('');
     const [tenantEmail, setTenantEmail] = useState('');
     const [tenantPhoneNumber, setTenantPhoneNumber] = useState('');
-    const [tenants,setTenants] = useState([]);
+    const [landLord,setLandLord] = useState<LandLordWithTenantsResponseDto>();
     const [landlordId, setLandLordId] = useState(Number(params.landlordId));
+
     useEffect(() => {
 
         try {
             getTenants(landlordId).then(
               response => {
-                setTenants(response.data);
+                setLandLord(response.data);
               }
             );
         } catch (error) {
@@ -46,18 +68,18 @@ export default function LandLordPage() {
         }
     },[]);
 
-
-    const handleClickOpen = () => {
-        setOpenForm(true);
+    const showModal = () => {
+      setOpenForm(true);
     };
+   
 
-    const handleClose = () => {
+    const closeModal = () => {
         setOpenForm(false);
     };
 
     const handleSubmit = async () => {
-        setOpenForm(false);
-
+        
+        setConfirmLoading(true);
         const tenant : Tenant = {
             firstName:tenantFirstName,
             lastName:tenantLatName,
@@ -67,106 +89,126 @@ export default function LandLordPage() {
 
         try {
             const response = await registerTenant(landlordId,tenant);
-            console.log(response.data);
+            
+            if(response.status === 201) {
+                console.log(response.data);
+                setConfirmLoading(false);
+                setOpenForm(false);
+                window.location.reload(); // Reload the page to fetch updated tenant list
+            } else {
+                alert("Failed to register tenant. Please try again.");
+            }
         } catch (error) {
-            console.log(error);
+            alert(error);
+            setConfirmLoading(false);
         }
     }
 
   return (
-    <React.Fragment>
-      <Grid container
-        display={'flex'}
-        direction={'column'}
-        alignContent={'center'}>
-        <Grid 
-            container
-            display={'flex'}
-            size={{ xs: 12, sm: 6 }}
-            direction={'row'}
-            justifyContent={'space-between'}
-            alignItems={'center'}
-            >
-            <Grid size={{ xs: 6, sm: 3 }}>
-                <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
-                 Tenants
-                </Typography>
-            </Grid>
-            <Grid 
-                 
-                size={{ xs: 6, sm: 3 }} 
-                display={'flex'}
-                justifyContent={'end'}>
-                <Tooltip title="Add Tenant">
-                    <IconButton aria-label="add tenant" size="large" color='primary' onClick={handleClickOpen}>
-                        <PersonAddAlt1Icon />
-                    </IconButton>
-                </Tooltip>
-                 
-            </Grid>
             
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-            <List >
-            {tenants.map(({ id, firstName, lastName, email }) => (
-                <ListItem 
-                  divider
-                  key={id}
-                  >
-                    <ListItemButton>
-                        <ListItemAvatar>
-                          <Avatar alt="Profile Picture" src={""} />
-                        </ListItemAvatar>
-                        <ListItemText primary={firstName} secondary={lastName} />
-                        <Chip label="not paid" color="error" variant="outlined" />
+    <Space direction="vertical" style={{ width: '100%', height: '100%' }}>
 
-                    </ListItemButton>
-                </ListItem>
-            ))}
-            </List>
-        </Grid>
-        
-      </Grid>
+      {landLord?.tenants !== null && landLord?.tenants!== undefined && landLord.tenants.length>0 ? 
       
+        <Space align="center" direction="vertical" style={{ width: '100%', height: '100%', padding: '20px' }}>
+          
+            <List      
+              itemLayout="vertical"
+              header ={
+                <Flex justify='space-between' >
+                  <Typography >Tenants/Contracts</Typography>
+                  <Button size='small' type="primary" shape="circle" icon={<PlusOutlined />} onClick={showModal} />
+                </Flex>
+            }
+              bordered
+              dataSource={landLord.tenants}
+              renderItem={(item) => (
+                <List.Item
+                  key={item.id}
+                  actions={[
+                      <Tag icon={<CheckCircleOutlined />} color="success">Signed</Tag>,
+                      <Tag icon={<CloseCircleOutlined />} color="error">Not Paid</Tag>
+                  ]}
+                  extra={
+                    <Tooltip title="More Info">
+                      <Button size='small' shape="circle" icon={<MoreOutlined />} onClick={() => alert("not implemented")} />
+                    </Tooltip>
+                  }
+                >
+                      <List.Item.Meta
+                        avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${item.id}`} />}
+                        title={<a href="https://ant.design">{item.firstName}</a>}
+                        description={`${item.firstName} ${item.lastName} - ${item.email} - ${item.phoneNumber}`}
+                      />
+                </List.Item>
+                  
+              )}
+            />
+         </Space>
+      :
+        <Result
+            
+            title={`${landLord?.landLordDetails !== undefined  && landLord?.landLordDetails !== null && landLord?.landLordDetails.firstName !== null
+              ? 
+              landLord.landLordDetails.lastName 
+              : 
+              'You have'} , no registered tenants yet.`}
+            status="warning"
+            icon={<ExclamationCircleOutlined />}
+            subTitle="Manage your properties and tenants with ease."
+            extra={
+              <Button color='blue' onClick={showModal} icon={<PlusCircleOutlined />} variant='outlined'>
+                Register Tenant
+              </Button>
+            }
+          />
+      }
+           
 
-       <Dialog
-        open={openForm}
-        onClose={handleClose}
-      >
-        <DialogTitle>Tenant Registration</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Make sure all info are valid
-          </DialogContentText>
-          <Grid 
-            container
-            display={'flex'}
-            direction={'column'}
-            alignItems={'center'}
-            >
-                <Grid>
-                    <TextField id="standard-basic" label="First Name" variant="standard" onChange={(e) => setTenantFirstName(e.target.value)}/>
-                </Grid>
-                <Grid>
-                    <TextField id="standard-basic" label="Last Name" variant="standard"  onChange={(e) => setTenantLastName(e.target.value)}/>
-                </Grid>
-                <Grid>
-                    <TextField id="standard-basic" label="Email" variant="standard" onChange={(e) => setTenantEmail(e.target.value)}/>
-                </Grid>
-                <Grid>
-                    <TextField id="standard-basic" label="Phone Number" variant="standard" onChange={(e) => setTenantPhoneNumber(e.target.value)} />
-                </Grid>
-                <Grid container>
-                    <Grid><Button onClick={handleClose}>Cancel</Button></Grid>
-                    <Grid><Button onClick={handleSubmit}>Submit</Button></Grid>
-                </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          
-          
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
+
+         
+            
+      <Modal
+            title="Register Tenant"
+            open={openForm}
+            onOk={handleSubmit}
+            confirmLoading={confirmLoading}
+            onCancel={closeModal}
+            footer={[
+              <Button key="back" onClick={closeModal}>
+                Cancel
+              </Button>,
+              <Button key="submit" type="primary" loading={confirmLoading} onClick={handleSubmit}>
+                Submit
+              </Button>
+            ]}
+          >
+            <Flex vertical align='center' gap={10} >
+              <Row >
+                <Col span={24}>
+                  <Input placeholder="First Name" value={tenantFirstName} onChange={(e) => setTenantFirstName(e.target.value)} />
+                </Col>
+              </Row>
+              <Row >
+                <Col span={24}>
+                  <Input placeholder="Last Name" value={tenantLatName} onChange={(e) => setTenantLastName(e.target.value)} />
+                </Col>
+              </Row>
+              <Row >
+                <Col span={24}>
+                  <Input placeholder="Email" value={tenantEmail} onChange={(e) => setTenantEmail(e.target.value)} />
+                </Col>
+              </Row>
+              <Row >
+                <Col span={24}>
+                  <Input placeholder="Phone Number" value={tenantPhoneNumber} onChange={(e) => setTenantPhoneNumber(e.target.value)}  />
+                </Col>  
+              </Row>
+            </Flex>
+            
+            
+      </Modal>
+    </Space>
+
   );
 }
