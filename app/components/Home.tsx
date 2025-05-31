@@ -8,7 +8,11 @@ export default function Home() {
         gap={'0'}
         vertical 
         align="center" 
-        justify="center" >
+        justify="center" 
+        style={{
+          height: '100vh',
+          background: 'linear-gradient(to bottom, #f0f2f5, #ffffff)'
+        }}>
         <Row justify="center">
           <Col span={24} style={{ textAlign: 'center' }}>
                   <Progress
@@ -28,8 +32,7 @@ export default function Home() {
             <p><i>Manage your properties with ease</i></p>
           </Col>
         </Row>
-       
-        
+
 
         <Row justify="center" align="middle">
           <Col span={24} style={{ textAlign: 'center' }}>
