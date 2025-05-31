@@ -3,9 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "react-router build",
-    "dev": "react-router dev --host --port 8080",
-    "start": "react-router-serve ./build/server/index.js",
+    "build": "vite build",
+    "dev": "vite --host --port 8080",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
@@ -21,7 +20,8 @@
     "isbot": "^5.1.27",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router": "^7.5.3"
+    "react-router": "^7.5.3",
+    "react-router-dom": "^7.6.1"
   },
   "devDependencies": {
     "@react-router/dev": "^7.5.3",

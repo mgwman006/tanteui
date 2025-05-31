@@ -1,7 +1,7 @@
 import { Button, Form, Input, Space } from "antd";
 import { useNavigate } from "react-router";
-import type { LandLord } from "~/models/user";
-import { registerLandLord } from "~/services/userServices";
+import type { LandLord, LandLordResponseDto } from "../models/user";
+import { registerLandLord } from "../services/userServices";
 
 
 
@@ -27,12 +27,12 @@ export default function RegisterLandLord()
                 console.log('Response:', response);
                 if(response.status===201)
                 {
-                    const id: number = Number(response.data.id);
+                    const data = response.data as LandLordResponseDto;
+                    const id: number = Number(data.id);
                     navigate(`/landlord/${id}`);
                 }
                 else {
                     alert(`Registration failed: ${response}`);
-                    console.log('Registration failed:', response.data.message);
                 }
         } catch (error) {
             console.log('Failed to Register:', error); 

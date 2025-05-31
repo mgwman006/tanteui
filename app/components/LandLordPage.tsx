@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useLoaderData, useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import type { Tenant } from '~/models/user';
-import { getTenants, registerTenant } from '~/services/userServices';
+import type { Tenant } from '../models/user';
+import { getTenants, registerTenant } from '../services/userServices';
 import { Avatar, Button, Col, Flex, FloatButton, Input, List, Modal, Result, Row, Space, Tag, Tooltip, Typography } from 'antd';
 import {
   CheckCircleOutlined,
@@ -60,7 +60,9 @@ export default function LandLordPage() {
         try {
             getTenants(landlordId).then(
               response => {
-                setLandLord(response.data);
+                const data = response.data as LandLordWithTenantsResponseDto;
+                console.log(data);
+                setLandLord(data);
               }
             );
         } catch (error) {
@@ -94,7 +96,7 @@ export default function LandLordPage() {
                 console.log(response.data);
                 setConfirmLoading(false);
                 setOpenForm(false);
-                // window.location.reload(); // Reload the page to fetch updated tenant list
+                window.location.reload(); // Reload the page to fetch updated tenant list
             } else {
                 alert("Failed to register tenant. Please try again.");
             }

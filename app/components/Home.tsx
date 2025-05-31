@@ -1,4 +1,3 @@
-import type { Route } from "./+types/home";
 import { Button, Col, Flex, Progress, Row } from 'antd';
 
 

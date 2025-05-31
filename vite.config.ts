@@ -1,15 +1,17 @@
-import { reactRouter } from "@react-router/dev/vite";
-import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+  root: ".", // project root, usually your repo root
+  plugins: [react()],
   
-server: {
-  host: '0.0.0.0',
-  port: 8080,
-  allowedHosts: true
-}
-
+  build: {
+    outDir: "dist",
+    emptyOutDir: true,
+  },
+  server: {
+    port: 8080,
+    open: false, // set to true to open the browser automatically
+    strictPort: true, // fail if the port is already in use
+  },
 });
