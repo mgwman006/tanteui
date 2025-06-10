@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite --host --port 8080",
+    "dev": "vite --host --port 4173",
+    "preview": "vite preview --host --port 4173",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {

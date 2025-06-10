@@ -1,4 +1,4 @@
-import { Button, Col, Flex, Progress, Row } from 'antd';
+import { Button, Col, Flex, Progress, Row,Image } from 'antd';
 
 
 
@@ -29,23 +29,13 @@ export default function Home() {
         <Row>
         
           <Col span={24} style={{ textAlign: 'center'}} >
-            <h1 style={{ fontSize:"50px"}}>Tante App</h1>
             <h3 style={{ fontSize:"25px"}}>Your one-stop solution for property management.</h3>
             <p style={{ fontSize:"20px"}}><i>Manage your properties with ease</i></p>
           </Col>
         </Row>
         <Row justify="center" align="middle">
-          <Col span={24} style={{ textAlign: 'center' }}>
-              <Button 
-                color="green" 
-                size="large" 
-                href="/login" 
-                variant="solid" 
-                style={{ width: '200px', height: '50px', fontSize: '20px' }}
-              >
-                Give it a Try
-              </Button>
-          </Col>
+          <Image preview={false} width='50%' src='../../public/logo.png'></Image>
+
         </Row>
 
       </Flex>);
