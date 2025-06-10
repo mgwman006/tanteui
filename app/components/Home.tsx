@@ -34,7 +34,7 @@ export default function Home() {
           </Col>
         </Row>
         <Row justify="center" align="middle">
-          <Image preview={false} width='50%' src='../../public/logo.png'></Image>
+          <Image preview={false} width='50%' src="/logo.png"></Image>
 
         </Row>
 
