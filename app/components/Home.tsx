@@ -33,10 +33,12 @@ export default function Home() {
             <p style={{ fontSize:"20px"}}><i>Manage your properties with ease</i></p>
           </Col>
         </Row>
+        
         <Row justify="center" align="middle">
-          <Image preview={false} width='50%' src="/logo.png"></Image>
+          <Image preview={false} width='50%' src="/logo-black-white.png"></Image>
 
         </Row>
+        
 
       </Flex>);
 }
