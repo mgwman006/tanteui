@@ -35,7 +35,7 @@ export default function Home() {
         </Row>
         
         <Row justify="center" align="middle">
-          <Image preview={false} width='50%' src="/logo-black-white.png"></Image>
+          <Image preview={false} width='50%' src="/logo.svg"></Image>
 
         </Row>
         
