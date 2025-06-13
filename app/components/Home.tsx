@@ -1,44 +1,117 @@
-import { Button, Col, Flex, Progress, Row,Image } from 'antd';
+import { Button, Col, Flex, Progress, Row,Image, Layout, Menu, Drawer } from 'antd';
+import { Content, Footer, Header } from 'antd/es/layout/layout';
+import { isMobile, isTablet, isBrowser } from 'react-device-detect';
+import { Link, Outlet } from 'react-router-dom';
+import { LikeOutlined, MenuOutlined, MessageOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons';
+import { useState } from 'react';
 
 
+const items = [
+  {
+    key: '1',
+    label: <Link to="/" >Home</Link>,
+  },
+  {
+    key: '2',
+    label: <Link to="/" >About Us</Link>,
+  },
+  {
+    key: '3',
+    label: <Link to="/" >Progress</Link>,
+  },
+  {
+    key: '3',
+    label: <Link to="/" >Investors</Link>,
+  }
+
+];
 
 export default function Home() {
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
-      <Flex 
-      
-        gap={'0'}
-        vertical 
-        align="center" 
-        justify="center" 
-        style={{
-          height: '100vh',
-          background: 'linear-gradient(to bottom, #f0f2f5, #ffffff)'
-        }}>
-        <Row justify="center">
-          <Col span={24} style={{ textAlign: 'center' }}>
-                  <Progress
-                    size={200}
-                    type="dashboard"
-                    steps={10}
-                    percent={10}
-                    trailColor="rgba(0, 0, 0, 0.06)"
-                    strokeWidth={20}
-                  />
-          </Col>
-        </Row>
-        <Row>
-        
-          <Col span={24} style={{ textAlign: 'center'}} >
-            <h3 style={{ fontSize:"25px"}}>Your one-stop solution for property management.</h3>
-            <p style={{ fontSize:"20px"}}><i>Manage your properties with ease</i></p>
-          </Col>
-        </Row>
-        
-        <Row justify="center" align="middle">
-          <Image preview={false} width='50%' src="/logo.svg"></Image>
+    <Layout>
+      {
+        isMobile ? 
+        (
+          <Header
+            style={{
+              position: 'sticky',
+              top: 0,
+              zIndex: 1,
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor:'white'
+            
+            }}
+          >
+            
+            <div>
+                <MenuOutlined  onClick={() => setShowMenu(true)} style={{ fontSize:'25px'}}/>
+                <Drawer
+                    title="Menu"
+                    placement="left"
+                    onClose={() => setShowMenu(false)}
+                    open={showMenu}
+                    size='large'
+                    >
 
-        </Row>
-        
+                    <Menu
+                      theme="light"
+                      mode="vertical"
+                      defaultSelectedKeys={['1']}
+                      items={items}
+                      style={{ flex: 1, minWidth: 0 }}
+                      onClick={() => setShowMenu(false)}
+                    />
+                </Drawer>
+            </div>
 
-      </Flex>);
+            {/* <div className="demo-logo" > */}
+            <div style={{  width:'100%', alignContent:'center', color:'white', textAlign:'center'}}>
+              <Image preview={false}  src="logo-white-black.png" width='60%'/>
+            </div>
+            
+          
+          </Header>
+        )
+        :
+        ( 
+            <Header
+              style={{
+                position: 'sticky',
+                top: 0,
+                zIndex: 1,
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor:'white'
+              }}
+            >
+              <div className="demo-logo" >
+                <Image preview={false}  src="mini.png"/>
+              </div>
+              <Menu
+                theme='light'
+                mode="horizontal"
+                defaultSelectedKeys={['1']}
+                items={items}
+                style={{ flex: 1, minWidth: 0 }}
+              />
+            
+            </Header>
+        )
+      }
+        
+      <Content>
+        <div>
+          <Outlet />
+        </div>
+      </Content>
+      <Footer>
+
+      </Footer>
+    </Layout>
+      );
 }
