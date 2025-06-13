@@ -20,7 +20,7 @@ const items = [
     label: <Link to="/" >Progress</Link>,
   },
   {
-    key: '3',
+    key: '4',
     label: <Link to="/" >Investors</Link>,
   }
 
