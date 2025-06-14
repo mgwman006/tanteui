@@ -2,7 +2,7 @@ import { Button, Col, Flex, Progress, Row,Image, Layout, Menu, Drawer } from 'an
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import { isMobile, isTablet, isBrowser } from 'react-device-detect';
 import { Link, Outlet } from 'react-router-dom';
-import { LikeOutlined, MenuOutlined, MessageOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons';
+import { LikeOutlined, MenuOutlined, MessageOutlined, ShoppingCartOutlined, StarOutlined, MailOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
 
@@ -13,7 +13,7 @@ const items = [
   },
   {
     key: '2',
-    label: <Link to="/" >Projects</Link>,
+    label: <Link to="projects" >Projects</Link>,
   },
   {
     key: '3',
@@ -105,8 +105,14 @@ export default function Home() {
           <Outlet />
         
       </Content>
-      <Footer>
+      <Footer style={{backgroundColor:"green"}}>
 
+        <Row align={'middle'} justify={'center'}>
+            <Col span={24}>
+              <h3 style={{color:"white", textAlign:'center', width:'100%'}}><MailOutlined /> maneno.mgwami@gmail.com</h3>
+            </Col>
+        </Row>
+            
       </Footer>
     </Layout>
       );
