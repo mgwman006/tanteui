@@ -1,10 +1,30 @@
-import { Col, Flex, Progress, Row, Steps } from "antd";
+import { Col, Flex, Progress, Row, Steps, Typography, Image, Button } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 export default function HomePage(){
     return(
 
-          <Flex 
+          <Flex vertical>
+
+              <Row align={"middle"}>
+                  <Col 
+                    xs={24} sm={12} md={12} lg={12} xl={12} 
+                    style={{textAlign:'center'}}
+                    >
+                                <Typography.Title>
+                                  We are automating the rental process by reducing paper work and improving efficiency
+                                </Typography.Title>
+                                <Button size="large" variant="outlined" color="green">Learn More</Button>
+                  </Col>
+                  <Col 
+                    xs={24} sm={12} md={12} lg={12} xl={12}  
+                    >
+                      <Image  preview={false} src="contractimage.jpg" alt="Property" />
+                  </Col>
+              </Row>
+
+          </Flex>
+                /* <Flex 
               gap={'0'}
               vertical 
               align="center" 
@@ -46,7 +66,12 @@ export default function HomePage(){
                   </Col>
                 </Row>
                 
-            </Flex>
+                </Flex> */
+
+                
+          
+
+          
     )
     
       

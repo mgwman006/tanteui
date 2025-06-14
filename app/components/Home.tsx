@@ -13,14 +13,10 @@ const items = [
   },
   {
     key: '2',
-    label: <Link to="/" >About Us</Link>,
+    label: <Link to="/" >Projects</Link>,
   },
   {
     key: '3',
-    label: <Link to="/" >Progress</Link>,
-  },
-  {
-    key: '4',
     label: <Link to="/" >Investors</Link>,
   }
 
@@ -30,7 +26,7 @@ export default function Home() {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <Layout>
+    <Layout >
       {
         isMobile ? 
         (
@@ -104,10 +100,10 @@ export default function Home() {
         )
       }
         
-      <Content>
-        <div>
+      <Content style={{backgroundColor:"white"}}>
+      
           <Outlet />
-        </div>
+        
       </Content>
       <Footer>
 
