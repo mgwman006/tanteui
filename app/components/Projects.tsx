@@ -65,7 +65,7 @@ export default function Projects()
                         >
                             <List.Item.Meta
                             avatar={<Avatar src={item.imagePath} />}
-                            title={<a href="https://ant.design">{item.title}</a>}
+                            title={<a href={item.link} target="_blank">{item.title}</a>}
                             description={item.description}
                             />
                         </div>
