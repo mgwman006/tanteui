@@ -10,15 +10,16 @@ const items = [
   {
     key: '1',
     label: <Link to="/" >Home</Link>,
-  },
-  {
-    key: '2',
-    label: <Link to="projects" >Projects</Link>,
-  },
-  {
-    key: '3',
-    label: <Link to="/" >Investors</Link>,
   }
+  // ,
+  // {
+  //   key: '2',
+  //   label: <Link to="projects" >Projects</Link>,
+  // },
+  // {
+  //   key: '3',
+  //   label: <Link to="/" >Investors</Link>,
+  // }
 
 ];
 
