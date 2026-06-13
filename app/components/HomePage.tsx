@@ -21,6 +21,7 @@ import {
   SafetyCertificateFilled,
   MobileFilled,
 } from "@ant-design/icons";
+import { useNavigate } from "react-router";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -141,6 +142,8 @@ function dotStyle(color: string): React.CSSProperties {
 }
 
 export default function HomePage() {
+  const navigate = useNavigate();
+
   return (
     <div style={{ minHeight: "100vh", background: "#fff", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
 
@@ -192,6 +195,7 @@ export default function HomePage() {
 
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", marginBottom: 40 }}>
             <Button
+              onClick={() => navigate("/auth")}
               type="primary" size="large"
               icon={<ArrowRightOutlined />}
               style={{ background: AMBER, borderColor: AMBER, color: NAVY, fontWeight: 700, height: 48, padding: "0 28px", fontSize: 15 }}
@@ -270,7 +274,6 @@ export default function HomePage() {
                     borderRadius: 16, border: `1.5px solid ${BORDER}`, height: "100%",
                     transition: "all 0.3s", overflow: "hidden",
                   }}
-                  bodyStyle={{ padding: 28 }}
                   styles={{
                     body: {
                       display: "flex", flexDirection: "column", height: "100%"
@@ -278,7 +281,10 @@ export default function HomePage() {
                   }}
                 >
 
-                  <Tag icon={f.icon} color={f.tagColor}>
+                  <Tag 
+                    icon={f.icon} 
+                    // color={f.tagColor}
+                  >
                     {f.tag}
                   </Tag>
 
@@ -406,11 +412,12 @@ export default function HomePage() {
           </Paragraph>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Button
+              onClick={() => navigate("/auth")}
               type="primary" size="large"
               icon={<ArrowRightOutlined />}
               style={{ background: AMBER, borderColor: AMBER, color: NAVY, fontWeight: 700, height: 50, padding: "0 32px", fontSize: 15 }}
             >
-              Get started free
+              Start for free
             </Button>
             {/* <Button size="large" ghost style={{ fontWeight: 600, height: 50, padding: "0 28px", fontSize: 15, borderColor: "rgba(255,255,255,0.25)", color: "#fff" }}>
               Schedule a demo

@@ -1,4 +1,4 @@
-import { Typography,Layout, Image, Grid, Drawer, Button, Card, Row, Divider, Col, Space, Tag, Flex } from 'antd';
+import { Typography,Layout, Image, Grid, Drawer, Button, Card, Row, Divider, Col, Space, Tag, Flex, ConfigProvider } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { Link, Outlet } from 'react-router-dom';
 import { useState } from 'react';
@@ -148,7 +148,21 @@ export default function AppLayout() {
       </Drawer>
 
       <Content style={{ backgroundColor: '#fff' }}>
-        <Outlet />
+         {/* <div style={{ marginBottom: 16 }}>
+        <span style={{ marginInlineEnd: 16 }}>Change direction of components:</span>
+        <Radio.Group defaultValue="ltr" onChange={changeDirection}>
+          <Radio.Button key="ltr" value="ltr">
+            LTR
+          </Radio.Button>
+          <Radio.Button key="rtl" value="rtl">
+            RTL
+          </Radio.Button>
+        </Radio.Group>
+      </div> */}
+        {/* <ConfigProvider > */}
+          <Outlet />
+        {/* </ConfigProvider> */}
+        
       </Content>
 
       <Footer style={{ backgroundColor: '#0F172A' }}>
