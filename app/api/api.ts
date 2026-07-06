@@ -75,26 +75,7 @@ export const usersApi = {
   },
 };
 
-// export const enrollmentsApi = {
-//   enroll: async (studentId: number, sectionId: number) =>
-//   {
-//     const res = await apiClient.post<ApiResponse<Enrollment>>("/enrollments/enroll", {studentId, sectionId });
-//     return handleResponse(res.data);
-//   },
-//   deregister: async (enrollmentId:number) =>
-//   {
-//     const res = await apiClient.delete<ApiResponse<null>>(`/enrollments/${enrollmentId}/deregister`);
-//     return handleResponse(res.data);
-//   }
-// };
 
-// export const semesterApi = {
-//   getActiveSemester: async () =>
-//   {
-//     const res = await apiClient.get<ApiResponse<SemesterDto>>("/semesters");
-//     return handleResponse(res.data);
-//   }
-// };
 
 export function handleResponse<T>(response: ApiResponse<T>): T {
   if (!response.success) {

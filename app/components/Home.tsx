@@ -2,6 +2,7 @@ import { Typography,Layout, Image, Grid, Drawer, Button, Card, Row, Divider, Col
 import { MenuOutlined } from '@ant-design/icons';
 import { Link, Outlet } from 'react-router-dom';
 import { useState } from 'react';
+import { navigateToAuth } from './HomePage';
 
 const { Title, Text, } = Typography;
 
@@ -81,13 +82,7 @@ export default function AppLayout() {
         {/* DESKTOP CTA BUTTONS */}
         {!isMobile && (
           <div style={{ display: 'flex', gap: 8, padding: '0 24px', flexShrink: 0 }}>
-            <Button ghost style={{ fontWeight: 700, fontSize: 13 }}>Log in</Button>
-            <Button
-              type="primary"
-              style={{ background: '#0F766E', borderColor: '#0F766E', fontWeight: 700, fontSize: 13 }}
-            >
-              Get Started
-            </Button>
+            <Button onClick={() => navigateToAuth("rent-manager", "")} ghost style={{ fontWeight: 700, fontSize: 13 }}>Log in</Button>
           </div>
         )}
 
@@ -136,14 +131,7 @@ export default function AppLayout() {
           </Link>
         ))}
         <div style={{ padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <Button block style={{ fontWeight: 700 }}>Log in</Button>
-          <Button
-            block
-            type="primary"
-            style={{ background: '#0F766E', borderColor: '#0F766E', fontWeight: 700 }}
-          >
-            Get Started Free →
-          </Button>
+          <Button onClick={() => navigateToAuth("rent-manager", "")} block style={{ fontWeight: 700 }}>Log in</Button>
         </div>
       </Drawer>
 
