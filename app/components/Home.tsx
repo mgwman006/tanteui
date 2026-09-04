@@ -1,6 +1,6 @@
 import { Typography,Layout, Image, Grid, Drawer, Button, Card, Row, Divider, Col, Space, Tag, Flex } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const { Title, Text, } = Typography;
@@ -8,17 +8,20 @@ const { Title, Text, } = Typography;
 const { Header, Footer, Content } = Layout;
 const { useBreakpoint } = Grid;
 
+
 const navItems = [
   { key: 'home', label: 'Home', to: '/' },
-  { key: 'properties', label: 'Properties', to: '/' },
-  { key: 'tenants', label: 'Tenants', to: '/' },
-  { key: 'payments', label: 'Payments', to: '/' },
+  { key: 'landlord', label: 'For Landlords', to: '/landlord' },
+  { key: 'tenants', label: 'For Tenants', to: '#' },
+  // { key: 'about', label: 'About Us', to: '/' },
+  // { key: 'contact', label: 'Contact', to: '/' },
 ];
 
 export default function AppLayout() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const screens = useBreakpoint();
   const isMobile = !screens.md; // <768px = mobile
+  const navigate = useNavigate();
 
   return (
     <Layout>
@@ -81,8 +84,8 @@ export default function AppLayout() {
         {/* DESKTOP CTA BUTTONS */}
         {!isMobile && (
           <div style={{ display: 'flex', gap: 8, padding: '0 24px', flexShrink: 0 }}>
-            <Button ghost style={{ fontWeight: 700, fontSize: 13 }}>Log in</Button>
             <Button
+              onClick={() => navigate('/landlord')}
               type="primary"
               style={{ background: '#0F766E', borderColor: '#0F766E', fontWeight: 700, fontSize: 13 }}
             >
@@ -136,11 +139,11 @@ export default function AppLayout() {
           </Link>
         ))}
         <div style={{ padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <Button block style={{ fontWeight: 700 }}>Log in</Button>
           <Button
             block
             type="primary"
             style={{ background: '#0F766E', borderColor: '#0F766E', fontWeight: 700 }}
+            onClick={() => navigate('/landlord')}
           >
             Get Started Free →
           </Button>
@@ -291,7 +294,7 @@ export default function AppLayout() {
           <Row gutter={[16, 16]} justify="space-between" align="middle">
             <Col xs={24} md={12}>
               <Text style={{ color: "#64748b" }}>
-                © 2026 tante Technologies (Pty) Ltd. All rights reserved.
+                © 2026 Tante Software Limited (Pty) Ltd. All rights reserved.
               </Text>
             </Col>
 

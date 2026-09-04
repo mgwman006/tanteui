@@ -21,6 +21,7 @@ import {
   SafetyCertificateFilled,
   MobileFilled,
 } from "@ant-design/icons";
+import { useNavigate } from "react-router";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -79,7 +80,7 @@ const stats = [
 const timelineItems = [
   {
     dot: <span style={dotStyle(TEAL)}>1</span>,
-    title: "Add your property",
+    title: "Create Lease",
     desc: "Import your portfolio in seconds — units, addresses, and existing tenants. No data entry required.",
   },
   {
@@ -141,6 +142,8 @@ function dotStyle(color: string): React.CSSProperties {
 }
 
 export default function HomePage() {
+
+  const navigate = useNavigate();
   return (
     <div style={{ minHeight: "100vh", background: "#fff", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
 
@@ -192,6 +195,7 @@ export default function HomePage() {
 
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", marginBottom: 40 }}>
             <Button
+              onClick={() => navigate('/landlord')}
               type="primary" size="large"
               icon={<ArrowRightOutlined />}
               style={{ background: AMBER, borderColor: AMBER, color: NAVY, fontWeight: 700, height: 48, padding: "0 28px", fontSize: 15 }}
@@ -277,11 +281,6 @@ export default function HomePage() {
                     }
                   }}
                 >
-
-                  <Tag icon={f.icon} color={f.tagColor}>
-                    {f.tag}
-                  </Tag>
-
                   <Title level={4} style={{ marginBottom: 8, fontSize: 17, fontWeight: 700 }}>{f.title}</Title>
                   <Paragraph style={{ color: MUTED, fontSize: 14, lineHeight: 1.7, flex: 1, marginBottom: 0 }}>{f.desc}</Paragraph>
                 </Card>
@@ -406,6 +405,7 @@ export default function HomePage() {
           </Paragraph>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <Button
+              onClick={() => navigate('/landlord')}
               type="primary" size="large"
               icon={<ArrowRightOutlined />}
               style={{ background: AMBER, borderColor: AMBER, color: NAVY, fontWeight: 700, height: 50, padding: "0 32px", fontSize: 15 }}
@@ -417,7 +417,7 @@ export default function HomePage() {
             </Button> */}
           </div>
           <Text style={{ display: "block", marginTop: 18, color: "rgba(255,255,255,0.3)", fontSize: 13 }}>
-            No credit card required · 180-day free trial · Cancel any time
+            No credit card required
           </Text>
         </div>
       </section>
