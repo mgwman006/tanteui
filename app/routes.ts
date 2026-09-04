@@ -1,9 +1,7 @@
 import Home from "./components/Home";
-import LogIn from "./components/LogIn";
-import RegisterLandLord from "./components/RegisterLandLord";
 import LandLordPage from "./components/LandLordPage";
 import HomePage from "./components/HomePage";
-import Projects from "./components/Projects";
+import TenantPage from "./components/TenantPage";
 
 const routes = [
   {
@@ -15,22 +13,14 @@ const routes = [
         Component: HomePage
       },
       {
-        path:"projects",
-        Component: Projects
+        path:"landlord",
+        Component: LandLordPage
+      },
+      {
+        path:"tenants",
+        Component: TenantPage
       }
     ]
-  },
-  {
-    path: "login",
-    Component: LogIn,
-  },
-  {
-    path: "registerlandlord",
-    Component: RegisterLandLord
-  },
-  {
-    path: "landlord/:landlordId",
-    Component: LandLordPage
   }
 ];
 
